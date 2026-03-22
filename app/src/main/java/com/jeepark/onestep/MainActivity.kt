@@ -16,7 +16,7 @@ import com.jeepark.onestep.ui.theme.OneStepTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        //enableEdgeToEdge()
         setContent {
             OneStepTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
