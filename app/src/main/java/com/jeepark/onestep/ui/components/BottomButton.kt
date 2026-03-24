@@ -8,7 +8,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jeepark.onestep.ui.theme.OneStepTheme
 import com.jeepark.onestep.ui.theme.beige2
 import com.jeepark.onestep.ui.theme.black
 import com.jeepark.onestep.ui.theme.gray1
@@ -41,5 +43,13 @@ fun BottomButton (
             text = text,
             style = text_Bold_20
         )
+    }
+}
+
+@Preview
+@Composable
+private fun PrevBottomButton() {
+    OneStepTheme {
+        BottomButton(text = "예시 버튼", onClick = {})
     }
 }
