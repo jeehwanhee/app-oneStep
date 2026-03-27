@@ -1,9 +1,0 @@
-package com.jeepark.onestep.ui.components
-
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-
-@Composable
-fun MainLayout(modifier: Modifier = Modifier) {
-
-}

@@ -13,7 +13,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.jeepark.onestep.ui.screens.AuthScreen
+import com.jeepark.onestep.ui.screens.InitQuestionScreen
 import com.jeepark.onestep.ui.screens.InitScreen
+import com.jeepark.onestep.ui.screens.MainQuestScreen
+import com.jeepark.onestep.ui.screens.MainScreen
+import com.jeepark.onestep.ui.screens.ProgressScreen
+import com.jeepark.onestep.ui.screens.SettingScreen
 import com.jeepark.onestep.ui.theme.OneStepTheme
 
 class MainActivity : ComponentActivity() {
@@ -70,12 +75,67 @@ fun MyNavGraph() {
         }
 
         composable(route = "InitQuestion") {
+            InitQuestionScreen(
+                onNavigateToMain = {
+                    navController.navigate("main") {
+                        popUpTo("InitQuestion") { inclusive = true }
+                    }
+                }
+            )
         }
-
-
 
         composable(route = "main") {
-
+            MainScreen(
+                onNavigateToMainQuest = {
+                    navController.navigate("mainQuest") {
+                        launchSingleTop = true
+                    }
+                },
+                onNavigateToProgress = {
+                    navController.navigate("progress") {
+                        launchSingleTop = true
+                    }
+                },
+                onNavigateToSetting = {
+                    navController.navigate("setting") {
+                        launchSingleTop = true
+                    }
+                }
+            )
         }
+
+        composable(route = "mainQuest") {
+            MainQuestScreen(
+                onNavigateToMain = {
+                    navController.navigate("main") {
+                        popUpTo("mainQuest") { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        composable(route = "progress") {
+            ProgressScreen(
+                onNavigateToMain = {
+                    navController.navigate("main") {
+                        popUpTo("progress") { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        composable(route = "setting") {
+            SettingScreen(
+                onNavigateToMain = {
+                    navController.navigate("main") {
+                        popUpTo("setting") { inclusive = true }
+                    }
+                }
+            )
+        }
+
+
+
+
     }
 }

@@ -27,7 +27,7 @@ import com.jeepark.onestep.ui.viewmodels.AuthViewModel
 
 @Composable
 fun AuthScreen(
-    onNavigateToInitMain : () -> Unit,
+    onNavigateToMain : () -> Unit,
     onNavigateToInitQuestion: () -> Unit,
     screenModel: AuthViewModel = viewModel()
 ) {
@@ -40,7 +40,7 @@ fun AuthScreen(
         screenModel.login(
             data = result.data,
             onNewUser = onNavigateToInitQuestion,
-            onExistingUser = onNavigateToInitMain
+            onExistingUser = onNavigateToMain
         )
     }
 
@@ -84,7 +84,7 @@ fun AuthScreen(
 @Composable
 private fun PreviewAuthScreen() {
     AuthScreen(
-        onNavigateToInitMain = {},
+        onNavigateToMain = {},
         onNavigateToInitQuestion = {}
     )
 }

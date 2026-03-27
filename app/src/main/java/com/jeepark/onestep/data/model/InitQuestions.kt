@@ -1,9 +1,9 @@
 package com.jeepark.onestep.data.model
 
 data class InitQuestions(
-    val member: Int,
-    val meal: Int,
-    val sleepTime: Int,
-    val outside: Int,
-    val hiki: Int
+    val member: Int = 0,
+    val meal: Int = 0,
+    val sleepTime: Int = 0,
+    val outside: Int = 0,
+    val hiki: Int = 0
 )

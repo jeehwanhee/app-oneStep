@@ -4,11 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun MainScreen(
+fun ProgressScreen(
     modifier: Modifier = Modifier,
-    onNavigateToMainQuest : () -> Unit,
-    onNavigateToProgress : () -> Unit,
-    onNavigateToSetting : () -> Unit,
+    onNavigateToMain : () -> Unit
 ) {
-    
+
 }
