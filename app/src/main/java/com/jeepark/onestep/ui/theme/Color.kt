@@ -2,7 +2,7 @@ package com.jeepark.onestep.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple = Color(0xFF3434FF)
+val purple = Color(0xFF3434FF)
 val black = Color(0xFF000000)
 val white = Color(0xFFFFFFFF)
 val gray1 = Color(0xFFA0A0A0)

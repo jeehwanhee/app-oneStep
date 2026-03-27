@@ -14,20 +14,24 @@ import androidx.compose.ui.platform.LocalContext
 private val DarkColorScheme = darkColorScheme(
     primary = beige2,
     secondary = beige1,
-    tertiary = gray1
+    tertiary = gray1,
+    background = white,
+    surface = white
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = beige2,
     secondary = beige1,
-    tertiary = gray1
+    tertiary = gray1,
+    background = white,
+    surface = white
 )
 
 @Composable
 fun OneStepTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {

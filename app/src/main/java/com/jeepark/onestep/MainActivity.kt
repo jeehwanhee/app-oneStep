@@ -3,14 +3,17 @@ package com.jeepark.onestep
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavGraph
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.jeepark.onestep.ui.screens.AuthScreen
+import com.jeepark.onestep.ui.screens.InitScreen
 import com.jeepark.onestep.ui.theme.OneStepTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,11 +22,11 @@ class MainActivity : ComponentActivity() {
         //enableEdgeToEdge()
         setContent {
             OneStepTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    MyNavGraph()
                 }
             }
         }
@@ -31,17 +34,48 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+fun MyNavGraph() {
+    val navController = rememberNavController()
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    OneStepTheme {
-        Greeting("Android")
+    NavHost(navController = navController, startDestination = "init") {
+
+        composable(route = "init") {
+            InitScreen(
+                onNavigateToAuth = {
+                    navController.navigate("auth") {
+                        popUpTo("init") { inclusive = true }
+                    }
+                },
+                onNavigateToMain = {
+                    navController.navigate("main") {
+                        popUpTo("init") { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        composable(route = "auth") {
+            AuthScreen(
+                onNavigateToMain = {
+                    navController.navigate("main") {
+                        popUpTo("auth") { inclusive = true }
+                    }
+                },
+                onNavigateToInitQuestion = {
+                    navController.navigate("InitQuestion") {
+                        popUpTo("auth") { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        composable(route = "InitQuestion") {
+        }
+
+
+
+        composable(route = "main") {
+
+        }
     }
 }
