@@ -28,7 +28,7 @@ import com.jeepark.onestep.ui.viewmodels.AuthViewModel
 @Composable
 fun AuthScreen(
     onNavigateToMain : () -> Unit,
-    onNavigateToInitQuestion: () -> Unit,
+    onNavigateToSignup: () -> Unit,
     screenModel: AuthViewModel = viewModel()
 ) {
     val context = LocalContext.current
@@ -39,7 +39,7 @@ fun AuthScreen(
         // 결과가 돌아오면 ViewModel의 login 함수에 데이터를 넘겨줌
         screenModel.login(
             data = result.data,
-            onNewUser = onNavigateToInitQuestion,
+            onNewUser = onNavigateToSignup,
             onExistingUser = onNavigateToMain
         )
     }
@@ -85,6 +85,6 @@ fun AuthScreen(
 private fun PreviewAuthScreen() {
     AuthScreen(
         onNavigateToMain = {},
-        onNavigateToInitQuestion = {}
+        onNavigateToSignup = {}
     )
 }

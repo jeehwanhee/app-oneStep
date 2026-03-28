@@ -12,6 +12,7 @@ import androidx.navigation.NavGraph
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.FirebaseApp
 import com.jeepark.onestep.ui.screens.AuthScreen
 import com.jeepark.onestep.ui.screens.InitQuestionScreen
 import com.jeepark.onestep.ui.screens.InitScreen
@@ -19,11 +20,13 @@ import com.jeepark.onestep.ui.screens.MainQuestScreen
 import com.jeepark.onestep.ui.screens.MainScreen
 import com.jeepark.onestep.ui.screens.ProgressScreen
 import com.jeepark.onestep.ui.screens.SettingScreen
+import com.jeepark.onestep.ui.screens.SignupScreen
 import com.jeepark.onestep.ui.theme.OneStepTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FirebaseApp.initializeApp(this)
         //enableEdgeToEdge()
         setContent {
             OneStepTheme {
@@ -66,9 +69,19 @@ fun MyNavGraph() {
                         popUpTo("auth") { inclusive = true }
                     }
                 },
+                onNavigateToSignup = {
+                    navController.navigate("signup") {
+                        popUpTo("auth") { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        composable(route = "signup") {
+            SignupScreen(
                 onNavigateToInitQuestion = {
                     navController.navigate("InitQuestion") {
-                        popUpTo("auth") { inclusive = true }
+                        popUpTo("signup") { inclusive = true }
                     }
                 }
             )
@@ -78,6 +91,11 @@ fun MyNavGraph() {
             InitQuestionScreen(
                 onNavigateToMain = {
                     navController.navigate("main") {
+                        popUpTo("InitQuestion") { inclusive = true }
+                    }
+                },
+                onNavigateToInit = {
+                    navController.navigate("init") {
                         popUpTo("InitQuestion") { inclusive = true }
                     }
                 }
@@ -129,6 +147,11 @@ fun MyNavGraph() {
                 onNavigateToMain = {
                     navController.navigate("main") {
                         popUpTo("setting") { inclusive = true }
+                    }
+                },
+                onNavigateToInitQuestion = {
+                    navController.navigate("InitQuestion") {
+                        popUpTo("auth") { inclusive = true }
                     }
                 }
             )

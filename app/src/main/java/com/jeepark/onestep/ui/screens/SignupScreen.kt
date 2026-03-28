@@ -4,10 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun SettingScreen(
+fun SignupScreen(
     modifier: Modifier = Modifier,
-    onNavigateToMain : () -> Unit,
-    onNavigateToInitQuestion : () -> Unit,
-) {
-    
+    onNavigateToInitQuestion: () -> Unit) {
+
 }
