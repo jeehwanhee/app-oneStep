@@ -11,26 +11,49 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.firestore
 import com.jeepark.onestep.ui.theme.text_Bold_28
 import kotlinx.coroutines.delay
 
 @Composable
 fun InitScreen(
-    onNavigateToAuth: () -> Unit, // 로그인 안 되어 있을 때 이동할 함수
-    onNavigateToMain: () -> Unit
+    onNavigateToAuth: () -> Unit,
+    onNavigateToMain: () -> Unit,
+    onNavigateToInitQuestion: () -> Unit,
+    onNavigateToSignup: () -> Unit
 ) {
     LaunchedEffect(Unit) {
         val auth = Firebase.auth
         val currentUser = auth.currentUser
+        val db = Firebase.firestore
 
-        // 너무 빨리 넘어가면 로고가 안 보이니 1.5초 정도 대기 (선택 사항)
+
         delay(1500)
 
         if (currentUser != null) {
-            // 1. 로그인 되어 있음 -> 메인(또는 진단) 화면으로
-            onNavigateToMain()
+            val uid = currentUser.uid
+
+            db.collection("users").document(uid).get()
+                .addOnSuccessListener { userDoc ->
+                    if (userDoc.exists()) {
+                        db.collection("users").document(uid)
+                            .collection("initquestions").limit(1).get()
+                            .addOnSuccessListener { querySnapshot ->
+                                val document = querySnapshot.documents.firstOrNull()
+                                val sleepTime = document?.getLong("sleepTime") ?: 0L
+
+                                if (sleepTime > 0) {
+                                    onNavigateToMain()
+                                } else {
+                                    onNavigateToInitQuestion()
+                                }
+                            }
+                    } else {
+                        onNavigateToSignup()
+                    }
+                }
+                .addOnFailureListener { onNavigateToAuth() }
         } else {
-            // 2. 로그인 안 되어 있음 -> 로그인 화면으로
             onNavigateToAuth()
         }
     }

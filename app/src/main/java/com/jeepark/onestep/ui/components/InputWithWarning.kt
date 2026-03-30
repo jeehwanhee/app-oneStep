@@ -29,7 +29,7 @@ fun InputWithWarning(
     ) {
         inputComp()
 
-        Spacer(modifier = Modifier.height(76.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         Text(text= warningText, style = text_regular_16, color = red)
     }

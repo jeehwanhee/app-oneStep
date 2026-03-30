@@ -93,8 +93,6 @@ fun InitQuestionScreen(
             }
 
 
-            // 질문 하나하나의 레이아웃
-
         }
 
         Box(

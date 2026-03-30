@@ -1,9 +1,11 @@
 package com.jeepark.onestep.data.model
 
 data class User(
-    val uid: String,
-    val email: String,
-    val nickname: String,
+    val uid: String = "",
+    val email: String = "",
+    val nickname: String = "",
+    val age: Int = 0,
+    val gender: Boolean =true, //true-남자
 
     val initQuestions: InitQuestions? = null,
     val isolated: Int = 0,

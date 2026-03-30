@@ -4,11 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavGraph
+import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -27,11 +28,14 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(this)
-        //enableEdgeToEdge()
+        val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
+        windowInsetsController.isAppearanceLightStatusBars = true
         setContent {
             OneStepTheme {
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .systemBarsPadding(),
                     color = MaterialTheme.colorScheme.background
                 ) {
                     MyNavGraph()
@@ -58,6 +62,16 @@ fun MyNavGraph() {
                     navController.navigate("main") {
                         popUpTo("init") { inclusive = true }
                     }
+                },
+                onNavigateToSignup = {
+                    navController.navigate("signup") {
+                        popUpTo("auth") { inclusive = true }
+                    }
+                },
+                onNavigateToInitQuestion = {
+                    navController.navigate("InitQuestion") {
+                        popUpTo("init") { inclusive = true }
+                    }
                 }
             )
         }
@@ -81,6 +95,11 @@ fun MyNavGraph() {
             SignupScreen(
                 onNavigateToInitQuestion = {
                     navController.navigate("InitQuestion") {
+                        popUpTo("signup") { inclusive = true }
+                    }
+                },
+                onNavigateToInit = {
+                    navController.navigate("init") {
                         popUpTo("signup") { inclusive = true }
                     }
                 }
