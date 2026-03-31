@@ -6,8 +6,8 @@ data class User(
     val nickname: String = "",
     val age: Int = 0,
     val gender: Boolean =true, //true-남자
+    val initQuestions: InitQuestions = InitQuestions(),
 
-    val initQuestions: InitQuestions? = null,
     val isolated: Int = 0,
     val isolatedLastModified: Long = System.currentTimeMillis(),
     val isolatedCount: Int = 0,

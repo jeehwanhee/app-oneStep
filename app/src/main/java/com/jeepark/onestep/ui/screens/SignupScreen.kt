@@ -111,6 +111,7 @@ fun SignupScreen(
                 onClick = {saveUserInFirebase(nickname, age, gender, repository, onNavigateToInitQuestion, onNavigateToInit, context)},
                 enabled = enabled,
             )
+
         }
 
     }

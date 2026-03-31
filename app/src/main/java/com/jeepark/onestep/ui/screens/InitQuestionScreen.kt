@@ -50,12 +50,12 @@ fun InitQuestionScreen(
     onNavigateToInit : () -> Unit,
     repository: FirestoreRepository = remember { FirestoreRepository() }
 ) {
-    val answers = remember { mutableStateListOf(0, 0, 0, 0, 0) }
+    val answers = remember { mutableStateListOf(-1, -1, -1, -1, -1) }
     var isLoading by remember { mutableStateOf(false) }
 
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState(pageCount = { 5 })
-    val questions = listOf("동거인 수", "식사 횟수", "수면 시간", "외출 빈도" ,"히키 기간")
+    val questions = listOf("동거인 수", "어제 식사 횟수", "어제 수면 시간", "지난 일주일 동안 밖에 나간 일 수" ,"일이나 학업을 하지 않은 기간 (월)")
 
     Column(
 
@@ -85,13 +85,12 @@ fun InitQuestionScreen(
                     isDigit = true,
                     placeholder = "답변",
                     onValueChange = { newValue ->
-                        answers[pageIndex] = newValue.toIntOrNull() ?: 0
+                        answers[pageIndex] = newValue.toIntOrNull() ?: -1
                     },
-                    text = if (answers[pageIndex] == 0) "" else answers[pageIndex].toString(),
+                    text = if (answers[pageIndex] == -1) "" else answers[pageIndex].toString(),
 
                 )
             }
-
 
         }
 
@@ -134,7 +133,7 @@ fun InitQuestionScreen(
             }
 
 
-            if (answers[pagerState.currentPage] > 0) {
+            if (answers[pagerState.currentPage] >= 0) {
                 if (pagerState.currentPage < 4) {
                     PagerNavigationButton(
                         icon = Icons.AutoMirrored.Filled.KeyboardArrowRight,
@@ -197,6 +196,7 @@ fun onClickSubmit(
         onFailure= {onNavigateToInit()},
     )
 }
+
 
 
 @Preview(showBackground = true)

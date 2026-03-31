@@ -5,5 +5,6 @@ data class InitQuestions(
     val meal: Int = 0,
     val sleepTime: Int = 0,
     val outside: Int = 0,
-    val hiki: Int = 0
+    val hiki: Int = 0,
+    val activeTime: Int = 0,
 )

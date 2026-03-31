@@ -12,8 +12,11 @@ import androidx.compose.ui.unit.dp
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
+import com.jeepark.onestep.data.model.InitQuestions
+import com.jeepark.onestep.data.model.User
 import com.jeepark.onestep.ui.theme.text_Bold_28
 import kotlinx.coroutines.delay
+import kotlin.jvm.java
 
 @Composable
 fun InitScreen(
@@ -36,23 +39,22 @@ fun InitScreen(
             db.collection("users").document(uid).get()
                 .addOnSuccessListener { userDoc ->
                     if (userDoc.exists()) {
-                        db.collection("users").document(uid)
-                            .collection("initquestions").limit(1).get()
-                            .addOnSuccessListener { querySnapshot ->
-                                val document = querySnapshot.documents.firstOrNull()
-                                val sleepTime = document?.getLong("sleepTime") ?: 0L
+                        val user = userDoc.toObject(User::class.java)
 
-                                if (sleepTime > 0) {
-                                    onNavigateToMain()
-                                } else {
-                                    onNavigateToInitQuestion()
-                                }
-                            }
+                        val initQuestions = user?.initQuestions
+
+                        if (initQuestions != null && initQuestions.sleepTime != 0) {
+                            onNavigateToMain()
+                        } else {
+                            onNavigateToInitQuestion()
+                        }
                     } else {
                         onNavigateToSignup()
                     }
                 }
-                .addOnFailureListener { onNavigateToAuth() }
+                .addOnFailureListener {
+                    onNavigateToAuth()
+                }
         } else {
             onNavigateToAuth()
         }
