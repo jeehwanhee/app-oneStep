@@ -126,7 +126,7 @@ fun saveUserInFirebase(
     onNavigateToInit: () -> Unit,
     context: android.content.Context
 ) {
-    repository.saveUser(
+    repository.saveInitUser(
         nickname=nickname,
         age=age,
         gender=gender,

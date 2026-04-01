@@ -1,6 +1,6 @@
 package com.jeepark.onestep.util;
 
-public class IsolationModel {
+public class Model_A {
 
     public static double predict(double[] input) {
         double rawScore = score(input);

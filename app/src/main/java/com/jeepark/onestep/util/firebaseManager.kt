@@ -1,20 +1,17 @@
 package com.jeepark.onestep.util
 
-import android.R.attr.data
-import android.R.id.input
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
 import com.jeepark.onestep.data.model.InitQuestions
 import com.jeepark.onestep.data.model.User
-import kotlinx.coroutines.tasks.await
 
 class FirestoreRepository {
     private val db = Firebase.firestore
     private val auth = Firebase.auth
 
-    fun saveUser(
+    fun saveInitUser(
         nickname: String,
         age: Int,
         gender: Boolean,
@@ -37,6 +34,8 @@ class FirestoreRepository {
             .addOnSuccessListener { onSuccess() }
             .addOnFailureListener { onFailure(it) }
     }
+
+
 
     fun getUser(
         onSuccess: (User) -> Unit,
@@ -82,7 +81,7 @@ class FirestoreRepository {
                     data.sleepTime.toDouble(),           // 6: sleep_hours
                     data.meal.toDouble()                 // 7: meal_count
                 )
-                val result = IsolationModel.predict(inputData)
+                val result = Model_A.predict(inputData)
                 val score = (result * 100).toInt()
 
                 db.collection("users").document(uid)
