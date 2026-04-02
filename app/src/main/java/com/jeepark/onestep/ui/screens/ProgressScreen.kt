@@ -35,17 +35,18 @@ fun ProgressScreen(
             .fillMaxSize()
             .background(Color.White)
     ){
-        Column(modifier = Modifier
+        Row(modifier = Modifier
             .height(92.dp)
             .fillMaxWidth()
-            .padding(16.dp)) {
+            .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically) {
             Image(
                 painter = painterResource(id = R.drawable.tier_test_image),
                 contentDescription = "현재 티어 족자 이미지",
                 modifier = Modifier
                     .size(60.dp),
                 contentScale = ContentScale.Fit)
-            Row(modifier = Modifier
+            Column(modifier = Modifier
                 .fillMaxWidth()
                 .height(46.dp)){}
         }
