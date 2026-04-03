@@ -43,7 +43,7 @@ fun SignupScreen(
     val enabled = nickname.isNotEmpty() && age != 0
 
     val nicknameRegex = "^[가-힣a-zA-Z0-9]*$".toRegex()
-    val warning = if (nickname.matches(nicknameRegex)) {
+    val warning = if (!nickname.matches(nicknameRegex)) {
         "한글, 영어, 숫자만 가능합니다."
     } else {
         ""
