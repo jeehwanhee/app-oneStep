@@ -33,24 +33,23 @@ fun ProgressScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(Color.White),
+
     ){
         Row(modifier = Modifier
             .height(92.dp)
             .fillMaxWidth()
-            .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically) {
+            .padding(16.dp)) {
             Image(
-                painter = painterResource(id = R.drawable.tier_test_image),
-                contentDescription = "현재 티어 족자 이미지",
+                painter = painterResource(id = R.drawable.tier_test_image_challenger),
+                contentDescription = "현재 티어 이미지",
                 modifier = Modifier
                     .size(60.dp),
                 contentScale = ContentScale.Fit)
             Column(modifier = Modifier
-                .fillMaxWidth()
-                .height(46.dp)){}
+                .weight(1f)
+                .fillMaxWidth()){}
         }
-
         Column(modifier = Modifier
             .fillMaxHeight()
             .fillMaxWidth()){}

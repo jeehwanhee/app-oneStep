@@ -4,5 +4,3 @@ package com.jeepark.onestep.data.model
 
 val EXPAMOUNT = arrayOf(15,33,72,110,170,250,350)
 
-
-
