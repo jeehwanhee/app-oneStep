@@ -21,6 +21,7 @@ import com.jeepark.onestep.ui.screens.InitScreen
 import com.jeepark.onestep.ui.screens.MainQuestScreen
 import com.jeepark.onestep.ui.screens.MainScreen
 import com.jeepark.onestep.ui.screens.ProgressScreen
+import com.jeepark.onestep.ui.screens.ReceiveQuestScreen
 import com.jeepark.onestep.ui.screens.SettingScreen
 import com.jeepark.onestep.ui.screens.SignupScreen
 import com.jeepark.onestep.ui.theme.OneStepTheme
@@ -127,7 +128,7 @@ fun MyNavGraph() {
         composable(route = "main") {
             MainScreen(
                 onNavigateToMainQuest = {
-                    navController.navigate("mainQuest") {
+                    navController.navigate("ReceiveQuest") {
                         launchSingleTop = true
                     }
                 },
@@ -139,6 +140,16 @@ fun MyNavGraph() {
                 onNavigateToSetting = {
                     navController.navigate("setting") {
                         launchSingleTop = true
+                    }
+                }
+            )
+        }
+
+        composable(route = "ReceiveQuest") {
+            ReceiveQuestScreen(
+                onNavigateToQuest = {
+                    navController.navigate("mainQuest") {
+                        popUpTo("ReceiveQuest") { inclusive = true }
                     }
                 }
             )
