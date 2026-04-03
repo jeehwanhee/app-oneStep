@@ -1,19 +1,28 @@
 package com.jeepark.onestep.ui.screens
 
+import android.R.attr.bottom
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
@@ -21,6 +30,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -30,6 +40,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.firebase.FirebaseApp
@@ -41,6 +53,7 @@ import com.jeepark.onestep.ui.theme.gray2
 import com.jeepark.onestep.ui.theme.text_Bold_28
 import com.jeepark.onestep.ui.theme.text_regular_20
 import com.jeepark.onestep.util.FirestoreRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
@@ -58,19 +71,25 @@ fun InitQuestionScreen(
     val questions = listOf("동거인 수", "어제 식사 횟수", "어제 수면 시간", "지난 일주일 동안 밖에 나간 일 수" ,"일이나 학업을 하지 않은 기간 (월)", "주된 활동 시간: 0(새벽), 1(오전), 2(오후), 3(저녁)")
 
     Column(
-
+        modifier = Modifier
+            .fillMaxSize()
+            .imePadding(),
+        verticalArrangement = Arrangement.Top
     ) {
+
+        Spacer(modifier = Modifier.height(120.dp))
+
         HorizontalPager(
             state = pagerState,
-            modifier = Modifier.weight(1f),
             userScrollEnabled = false,
         ) { pageIndex ->
             val currentQuestion = questions[pageIndex]
 
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 60.dp, vertical = 160.dp),
+                    .fillMaxWidth()
+                    .height(210.dp)
+                    .padding(horizontal = 60.dp),
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.Top
             ) {
@@ -79,9 +98,19 @@ fun InitQuestionScreen(
                 style= text_Bold_28,
                 )
 
-                Spacer(modifier = Modifier.height(80.dp))
+                Spacer(modifier = Modifier.height(60.dp))
+
+                val focusRequester = remember { FocusRequester() }
+
+                LaunchedEffect(pagerState.currentPage) {
+                    if (pagerState.currentPage == pageIndex) {
+                        delay(100)
+                        focusRequester.requestFocus()
+                    }
+                }
 
                 TextInput(
+                    modifier = Modifier.focusRequester(focusRequester),
                     isDigit = true,
                     placeholder = "답변",
                     onValueChange = { newValue ->
@@ -90,14 +119,18 @@ fun InitQuestionScreen(
                     text = if (answers[pageIndex] == -1) "" else answers[pageIndex].toString(),
 
                 )
+
+                Spacer(modifier = Modifier.weight(1f))
             }
 
         }
 
+        Spacer(modifier = Modifier.weight(1f))
+
         Box(
             modifier = Modifier
-                .height(80.dp)
                 .fillMaxWidth()
+                .height(50.dp)
                 .padding(horizontal = 20.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -115,6 +148,7 @@ fun InitQuestionScreen(
                     }
                 )
             }
+
 
             Row(
                 horizontalArrangement = Arrangement.Center,
@@ -170,6 +204,8 @@ fun InitQuestionScreen(
                 }
             }
         }
+
+        Spacer(Modifier.height(30.dp))
     }
 
 
